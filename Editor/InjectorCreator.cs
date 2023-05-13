@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Adruian.Injection
 {
-    public class DataInjectorCreator
+    public class InjectorCreator
     {
         public static string className = string.Empty;
         public static string folderPath = string.Empty;

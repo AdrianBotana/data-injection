@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Adruian.CodeInjection.Test
 {
-    public class VariableInjectionCaller : MonoBehaviour, IDataCaller<Vector3>
+    public class InjectionCaller : MonoBehaviour, IDataCaller<Vector3>
     {
         public event Action<Vector3> OnVariableChanged;
 

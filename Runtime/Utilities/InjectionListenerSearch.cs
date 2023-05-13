@@ -6,7 +6,7 @@ using UnityEditor;
 
 namespace Adruian.CodeInjection
 {
-    public class DataInjectorSearch : MonoBehaviour
+    public class InjectionListenerSearch : MonoBehaviour
     {
         public void FindAllDataInjectors()
         {
@@ -17,14 +17,14 @@ namespace Adruian.CodeInjection
         }
 
 #if UNITY_EDITOR
-        [CustomEditor(typeof(DataInjectorSearch))]
+        [CustomEditor(typeof(InjectionListenerSearch))]
         public class ObjectBuilderEditor : Editor
         {
             public override void OnInspectorGUI()
             {
                 DrawDefaultInspector();
 
-                DataInjectorSearch myScript = (DataInjectorSearch)target;
+                InjectionListenerSearch myScript = (InjectionListenerSearch)target;
                 if (GUILayout.Button("FindAllDataInjectors"))
                 {
                     myScript.FindAllDataInjectors();

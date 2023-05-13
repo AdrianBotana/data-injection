@@ -1,23 +1,23 @@
-using System.Collections.Generic;
-using UnityEngine;
 using TNRD;
 using System;
 using System.Linq;
+using UnityEngine;
+using System.Collections.Generic;
 
 namespace Adruian.CodeInjection
 {
-    public class DataInjectorList<T> : MonoBehaviour, IDataInjector
+    public class InjectionBehavior<T> : MonoBehaviour, IDataInjector
     {
-        [SerializeField] private List<SerializableInterface<IDataCaller<T>>> callers;
+        [SerializeField] private SerializableInterface<IDataCaller<T>> caller;
         [SerializeField] private List<SerializableInterface<IDataListener<T>>> listeners;
 
         void Awake()
         {
-            foreach (SerializableInterface<IDataListener<T>> listener in listeners)
+            if (caller.TryGetValue(out IDataCaller<T> callerValue))
             {
-                foreach (SerializableInterface<IDataCaller<T>> caller in callers)
+                foreach (SerializableInterface<IDataListener<T>> listener in listeners)
                 {
-                    caller.Value.OnVariableChanged += UpdateListener;
+                    callerValue.OnVariableChanged += UpdateListener;
                     void UpdateListener(T obj)
                     {
                         // listener.Value.Value = obj;
@@ -36,49 +36,24 @@ namespace Adruian.CodeInjection
             }
         }
 
-        public void AddInjectListener(IDataListener<T> listener)
-        {
-            foreach (SerializableInterface<IDataCaller<T>> caller in callers)
-            {
-                caller.Value.OnVariableChanged += UpdateListener;
-                void UpdateListener(T obj)
-                {
-                    // listener.Value = obj;
-                    listener.VariableChanged(obj);
-                }
-            }
-        }
-
         public void AddListener(IDataListener<T> listener)
         {
-            foreach (SerializableInterface<IDataCaller<T>> caller in callers)
-            {
-                caller.Value.OnVariableChanged += listener.VariableChanged;
-            }
+            caller.Value.OnVariableChanged += listener.VariableChanged;
         }
 
         public void AddListener(Action<T> listener)
         {
-            foreach (SerializableInterface<IDataCaller<T>> caller in callers)
-            {
-                caller.Value.OnVariableChanged += listener;
-            }
+            caller.Value.OnVariableChanged += listener;
         }
 
         public void RemoveListener(IDataListener<T> listener)
         {
-            foreach (SerializableInterface<IDataCaller<T>> caller in callers)
-            {
-                caller.Value.OnVariableChanged -= listener.VariableChanged;
-            }
+            caller.Value.OnVariableChanged -= listener.VariableChanged;
         }
 
         public void RemoveListener(Action<T> listener)
         {
-            foreach (SerializableInterface<IDataCaller<T>> caller in callers)
-            {
-                caller.Value.OnVariableChanged -= listener;
-            }
+            caller.Value.OnVariableChanged -= listener;
         }
 
         void OnValidate()
@@ -93,13 +68,16 @@ namespace Adruian.CodeInjection
         public void FindAllListeners()
         {
             listeners.Clear();
-            var ss = FindObjectsOfType<MonoBehaviour>().OfType<IDataListener<T>>();
+            var ss = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataListener<T>>();
             foreach (IDataListener<T> s in ss)
             {
                 SerializableInterface<IDataListener<T>> ser = new SerializableInterface<IDataListener<T>>();
                 ser.Value = s;
                 listeners.Add(ser);
             }
+#if UNITY_EDITOR
+            UnityEditor.SceneManagement.EditorSceneManager.MarkSceneDirty(UnityEditor.SceneManagement.EditorSceneManager.GetActiveScene());
+#endif
         }
     }
 }

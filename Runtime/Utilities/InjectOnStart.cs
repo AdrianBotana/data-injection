@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 namespace Adruian.CodeInjection
 {
-    public class DataInjectorOnStart<T> : MonoBehaviour, IDataCaller<T>
+    public class InjectOnStart<T> : MonoBehaviour, IDataCaller<T>
     {
         [SerializeField] T data;
         public event Action<T> OnVariableChanged;
