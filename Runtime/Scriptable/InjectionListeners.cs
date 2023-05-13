@@ -19,7 +19,12 @@ namespace Adruian.CodeInjection
             }
         }
 
-        [Button(ButtonMode.DisabledInPlayMode)]
+        private void OnValidate()
+        {
+            if (listeners.Count < 1)
+                FindAllListeners();
+        }
+
         public void FindAllListeners()
         {
             listeners.Clear();

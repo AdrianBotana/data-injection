@@ -85,9 +85,11 @@ namespace Adruian.CodeInjection
         {
             string[] parts = typeof(T).ToString().Split('.');
             gameObject.name = "[" + parts[parts.Length - 1] + "]";
+
+            if (listeners.Count < 1)
+                FindAllListeners();
         }
 
-        [Button(ButtonMode.DisabledInPlayMode)]
         public void FindAllListeners()
         {
             listeners.Clear();
