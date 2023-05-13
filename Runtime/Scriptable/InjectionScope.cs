@@ -28,6 +28,12 @@ namespace Adruian.CodeInjection
                 caller.OnVariableChanged -= listener;
         }
 
+        public void InjectData(T data)
+        {
+            foreach (Action<T> listener in listeners)
+                listener.Invoke(data);
+        }
+
         public void AddListener(Action<T> listener) => EnsureAddListener(listener);
         public void AddListener(IDataListener<T> listener) => EnsureAddListener(listener.VariableChanged);
 
