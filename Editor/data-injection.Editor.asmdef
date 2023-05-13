@@ -1,7 +1,9 @@
 {
-    "name": "data-injection",
+    "name": "data-injection.Test",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:d0a1f1283058e9c45a874e52b245cdfe"
+    ],
     "includePlatforms": [
         "Editor"
     ],

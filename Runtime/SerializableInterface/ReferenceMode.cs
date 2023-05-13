@@ -1,6 +1,6 @@
 ﻿namespace TNRD
 {
-    internal enum ReferenceMode
+    public enum ReferenceMode
     {
         Unity,
         Raw
