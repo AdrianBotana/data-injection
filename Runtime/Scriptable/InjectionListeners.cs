@@ -19,6 +19,15 @@ namespace Adruian.CodeInjection
             }
         }
 
+        private void OnDestroy()
+        {
+            foreach (SerializableInterface<IDataListener<T>> listener in listeners)
+            {
+                if (listener.TryGetValue(out IDataListener<T> listenerValue))
+                    scriptable.RemoveListener(listenerValue);
+            }
+        }
+
         private void OnValidate()
         {
             if (listeners.Count < 1)
