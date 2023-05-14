@@ -17,15 +17,9 @@ namespace Adruian.CodeInjection
                     caller.OnVariableChanged -= listener;
             }
             this.caller = caller;
-            foreach (Action<T> listener in listeners)
-                caller.OnVariableChanged += listener;
-        }
-
-        private void OnDestroy()
-        {
             if (caller == null) return;
             foreach (Action<T> listener in listeners)
-                caller.OnVariableChanged -= listener;
+                caller.OnVariableChanged += listener;
         }
 
         public void InjectData(T data)

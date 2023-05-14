@@ -14,5 +14,11 @@ namespace Adruian.CodeInjection
             if (caller.TryGetValue(out IDataCaller<T> callerValue))
                 scriptable.SetCaller(callerValue);
         }
+
+        private void OnDestroy()
+        {
+            if (caller.TryGetValue(out IDataCaller<T> callerValue))
+                scriptable.SetCaller(null);
+        }
     }
 }
