@@ -8,8 +8,14 @@ namespace Adruian.CodeInjection
 {
     public class InjectionBehavior<T> : MonoBehaviour, IDataInjector
     {
+        [SerializeField] string type = string.Empty;
+        [SerializeField] bool includeType;
+        [SerializeField] bool includeNoType;
+        [Space]
         [SerializeField] private SerializableInterface<IDataCaller<T>> caller;
         [SerializeField] private List<SerializableInterface<IDataListener<T>>> listeners;
+
+        public string Type => type;
 
         void Awake()
         {
@@ -71,6 +77,15 @@ namespace Adruian.CodeInjection
             var ss = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataListener<T>>();
             foreach (IDataListener<T> s in ss)
             {
+                if ((s as MonoBehaviour).TryGetComponent<InjectionType>(out InjectionType injection))
+                {
+                    // if(includeType && injection.Type != Type) return;
+                    // if(!includeType && injection.Type == Type) return;
+
+                    if (includeType == (injection.Type != Type)) continue;
+                }
+                else if (!includeNoType) continue;
+
                 SerializableInterface<IDataListener<T>> ser = new SerializableInterface<IDataListener<T>>();
                 ser.Value = s;
                 listeners.Add(ser);

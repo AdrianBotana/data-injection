@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1daf86153dabb694a95cad6cb4be20cf, type: 3}
+  m_Script: {fileID: 11500000, guid: e2e1d0073226cc24aa054b4af23837ab, type: 3}
   m_Name: Vector3InjectorScriptable
   m_EditorClassIdentifier: 

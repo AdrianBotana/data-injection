@@ -5,10 +5,9 @@ using UnityEngine;
 
 namespace Adruian.CodeInjection
 {
+
     public interface IDataListener<T>
     {
-        public Type Type => typeof(T);
-
         void VariableChanged(T value);
     }
 
@@ -17,8 +16,16 @@ namespace Adruian.CodeInjection
         event Action<T> OnVariableChanged;
     }
 
+
+
     public interface IDataInjector
     {
+        string Type { get; }
         void FindAllListeners();
+    }
+
+    public interface IDataInjection
+    {
+        string Type { get; }
     }
 }
