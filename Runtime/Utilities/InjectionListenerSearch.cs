@@ -10,7 +10,7 @@ namespace Adruian.CodeInjection
     {
         public void FindAllDataInjectors()
         {
-            var injectors = FindObjectsOfType<MonoBehaviour>().OfType<IDataInjector>();
+            var injectors = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataInjector>();
 
             foreach (var item in injectors)
                 item.FindAllListeners();
