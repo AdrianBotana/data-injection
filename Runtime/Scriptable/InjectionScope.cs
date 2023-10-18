@@ -43,11 +43,10 @@ namespace Adruian.CodeInjection
 
         private void EnsureRemoveListener(Action<T> listener)
         {
-            if (caller == null) return;
-
             if (listeners.Contains(listener))
             {
                 listeners.Remove(listener);
+                if (caller == null) return;
                 caller.OnVariableChanged -= listener;
             }
         }
