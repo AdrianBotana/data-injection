@@ -7,18 +7,24 @@ namespace Adruian.CodeInjection
     public class InjectionCaller<T> : MonoBehaviour
     {
         [SerializeField] private InjectionScope<T> scriptable;
-        [SerializeField] private SerializableInterface<IDataCaller<T>> caller;
+        [SerializeField] private List<SerializableInterface<IDataCaller<T>>> callers = new List<SerializableInterface<IDataCaller<T>>>();
 
         private void Awake()
         {
-            if (caller.TryGetValue(out IDataCaller<T> callerValue))
-                scriptable.SetCaller(callerValue);
+            foreach (SerializableInterface<IDataCaller<T>> listener in callers)
+            {
+                if (listener.TryGetValue(out IDataCaller<T> listenerValue))
+                    scriptable.AddCaller(listenerValue);
+            }
         }
 
         private void OnDestroy()
         {
-            if (caller.TryGetValue(out IDataCaller<T> callerValue))
-                scriptable.SetCaller(null);
+            foreach (SerializableInterface<IDataCaller<T>> listener in callers)
+            {
+                if (listener.TryGetValue(out IDataCaller<T> listenerValue))
+                    scriptable.RemoveCaller(listenerValue);
+            }
         }
     }
 }
