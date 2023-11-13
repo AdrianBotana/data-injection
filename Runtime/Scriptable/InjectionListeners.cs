@@ -8,8 +8,8 @@ namespace Adruian.CodeInjection
     public class InjectionListeners<T> : MonoBehaviour, IDataInjector
     {
         [SerializeField] string type = string.Empty;
-        [SerializeField] bool includeType;
-        [SerializeField] bool includeNoType;
+        [SerializeField] bool includeType = false;
+        [SerializeField] bool includeNoType = true;
         [Space]
         [SerializeField] private InjectionScope<T> scriptable;
         [SerializeField] private List<SerializableInterface<IDataListener<T>>> listeners = new List<SerializableInterface<IDataListener<T>>>();
