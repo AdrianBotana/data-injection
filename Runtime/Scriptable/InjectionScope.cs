@@ -6,7 +6,7 @@ namespace Adruian.CodeInjection
 {
     public class InjectionScope<T> : ScriptableObject
     {
-        private List<IDataCaller<T>> callers = new List<IDataCaller<T>>();;
+        private List<IDataCaller<T>> callers = new List<IDataCaller<T>>();
         private List<Action<T>> listeners = new List<Action<T>>();
 
         public void InjectData(T data)
