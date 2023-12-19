@@ -8,7 +8,7 @@ namespace Adruian.CodeInjection
 {
     public class InjectionListenerSearch : MonoBehaviour
     {
-        [SerializeField] bool autoFindInjectors;
+        [SerializeField] bool autoFindInjectors = true;
 
         private void OnValidate()
         {
@@ -33,10 +33,10 @@ namespace Adruian.CodeInjection
                 DrawDefaultInspector();
 
                 InjectionListenerSearch myScript = (InjectionListenerSearch)target;
+                if (myScript.autoFindInjectors) return;
+
                 if (GUILayout.Button("FindAllDataInjectors"))
-                {
                     myScript.FindAllDataInjectors();
-                }
             }
         }
 #endif
