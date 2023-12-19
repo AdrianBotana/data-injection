@@ -8,7 +8,15 @@ namespace Adruian.CodeInjection
 {
     public class InjectionListenerSearch : MonoBehaviour
     {
-        public void FindAllDataInjectors()
+        [SerializeField] bool autoFindInjectors;
+
+        private void OnValidate()
+        {
+            if (autoFindInjectors)
+                FindAllDataInjectors();
+        }
+
+        private void FindAllDataInjectors()
         {
             var injectors = FindObjectsOfType<MonoBehaviour>(true).OfType<IDataInjector>();
 
