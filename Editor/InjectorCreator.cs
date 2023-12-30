@@ -10,7 +10,7 @@ namespace Adruian.Injection
         public static string folderPath = string.Empty;
 
         [MenuItem("Injector/Create Injector Scripts")]
-        static void DoSomething()
+        static void CreateInjectorScripts()
         {
             StringModalWindow window = EditorWindow.CreateInstance<StringModalWindow>();
             window.titleContent = new GUIContent("Create Injector Scripts");
@@ -60,15 +60,13 @@ namespace Adruian.CodeInjection
                 GUILayout.Label("Destination path", GUILayout.Width(100));
                 folderPath = GUILayout.TextField(folderPath, 100);
                 if (GUILayout.Button("Find", GUILayout.Width(50)))
-                    folderPath = EditorUtility.SaveFolderPanel("Create scripts paths", Application.dataPath, string.Empty);
+                    folderPath = Path.GetRelativePath(Directory.GetParent(Application.dataPath).FullName, EditorUtility.SaveFolderPanel("Create scripts paths", Application.dataPath, string.Empty));
                 GUILayout.EndHorizontal();
 
                 if (string.IsNullOrWhiteSpace(className) || string.IsNullOrWhiteSpace(folderPath)) return;
                 GUILayout.Space(10);
                 if (GUILayout.Button("Submit")) Close();
             }
-
-
         }
     }
 }

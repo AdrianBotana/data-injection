@@ -16,8 +16,6 @@ namespace Adruian.CodeInjection
         event Action<T> OnVariableChanged;
     }
 
-
-
     public interface IDataInjector
     {
         string Type { get; }

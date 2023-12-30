@@ -2,6 +2,7 @@ using System.Linq;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.SceneManagement;
 #endif
 
 namespace Adruian.CodeInjection
@@ -37,9 +38,10 @@ namespace Adruian.CodeInjection
 
                 if (GUILayout.Button("FindAllDataInjectors"))
                     myScript.FindAllDataInjectors();
+                    
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
             }
         }
 #endif
-
     }
 }
